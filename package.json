@@ -1,0 +1,36 @@
+{
+  "name": "gatsby-plugin-mui",
+  "version": "0.1.0",
+  "description": "Material UI Gatsby V2 plugin",
+  "main": "index.js",
+  "scripts": {
+    "build": " babel src -d .",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepublishOnly": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ekoeryanto/gatsby-plugin-mui.git"
+  },
+  "keywords": [
+    "gatsby",
+    "material-ui"
+  ],
+  "author": "Eko Eryanto <ekoeryanto@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ekoeryanto/gatsby-plugin-mui/issues"
+  },
+  "homepage": "https://github.com/ekoeryanto/gatsby-plugin-mui#readme",
+  "devDependencies": {
+    "@babel/cli": "^7.1.0",
+    "@babel/core": "^7.1.0",
+    "@babel/preset-env": "^7.1.0"
+  },
+  "peerDependencies": {
+    "@material-ui/core": "^3.0.0",
+    "gatsby": ">2.0.0-alpha",
+    "react": ">16.0.0",
+    "react-jss": ">8.0.0"
+  }
+}
