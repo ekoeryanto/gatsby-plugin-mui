@@ -1,6 +1,7 @@
 const React = require("react");
-const { MuiThemeProvider } = require("@material-ui/core/styles");
-const context = require("./page-context");
+const MuiThemeProvider = require("@material-ui/core/styles").MuiThemeProvider;
+
+const createContext = require("./create-context");
 
 exports.onInitialClientRender = () => {
   const jssheets = document.getElementById("server-side-jss");
@@ -10,10 +11,15 @@ exports.onInitialClientRender = () => {
 };
 
 exports.wrapRootElement = ({ element }, options) => {
-  const { theme, sheetsManager } = context(options.theme || {});
-  return React.createElement(
-    MuiThemeProvider,
-    { theme, sheetsManager },
-    element
+  if (!global.__INIT_MATERIAL_UI__) {
+    global.__INIT_MATERIAL_UI__ = createContext(options);
+  }
+
+  const { theme, sheetsManager } = global.__INIT_MATERIAL_UI__;
+
+  return (
+    <MuiThemeProvider theme={theme} sheetsManager={sheetsManager}>
+      {element}
+    </MuiThemeProvider>
   );
 };

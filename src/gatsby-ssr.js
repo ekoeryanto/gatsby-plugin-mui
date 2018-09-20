@@ -2,34 +2,43 @@ const React = require("react");
 const { JssProvider } = require("react-jss");
 const { MuiThemeProvider } = require("@material-ui/core/styles");
 
-const context = require("./page-context");
+const createContext = require("./create-context");
 
 let registry;
 
 exports.wrapRootElement = ({ element }, options) => {
-  const { theme, sheetsRegistry, generateClassName } = context(
-    options.theme || {}
-  );
+  const {
+    theme,
+    sheetsRegistry,
+    generateClassName,
+    sheetsManager
+  } = createContext(options);
 
   registry = sheetsRegistry;
-  return React.createElement(
-    JssProvider,
-    { sheetsRegistry, generateClassName },
-    React.createElement(MuiThemeProvider, { theme, sheetsRegistry }, element)
+
+  return (
+    <JssProvider
+      sheetsRegistry={sheetsRegistry}
+      generateClassName={generateClassName}
+    >
+      <MuiThemeProvider theme={theme} sheetsManager={sheetsManager}>
+        {element}
+      </MuiThemeProvider>
+    </JssProvider>
   );
 };
 
 exports.onRenderBody = ({ setHeadComponents }) => {
   if (registry) {
     setHeadComponents([
-      React.createElement("style", {
-        type: "text/css",
-        id: "server-side-jss",
-        key: "server-side-jss",
-        dangerouslySetInnerHTML: {
+      <style
+        type="text/css"
+        id="server-side-jss"
+        key="server-side-jss"
+        dangerouslySetInnerHTML={{
           __html: registry.toString()
-        }
-      })
+        }}
+      />
     ]);
   }
 };
