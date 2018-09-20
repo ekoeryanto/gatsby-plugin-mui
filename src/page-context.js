@@ -1,9 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 
-import { SheetsRegistry } from 'react-jss'
-import {
-  createGenerateClassName
-} from '@material-ui/core/styles'
+import SheetsRegistry from 'jss/lib/SheetsRegistry'
+import createGenerateClassName from '@material-ui/core/styles/createGenerateClassName'
 
 function createPageContext (theme) {
   return {
@@ -17,16 +15,16 @@ function createPageContext (theme) {
   }
 }
 
-export default function getPageContext () {
+module.exports = function getPageContext (theme) {
   // Make sure to create a new context for every server-side request so that data
   // isn't shared between connections (which would be bad).
   if (!process.browser) {
-    return createPageContext()
+    return createPageContext(theme)
   }
 
   // Reuse context on the client-side.
   if (!global.__INIT_MATERIAL_UI__) {
-    global.__INIT_MATERIAL_UI__ = createPageContext()
+    global.__INIT_MATERIAL_UI__ = createPageContext(theme)
   }
 
   return global.__INIT_MATERIAL_UI__
