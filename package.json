@@ -14,7 +14,8 @@
   },
   "keywords": [
     "gatsby",
-    "material-ui"
+    "material-ui",
+    "gatsby-plugin"
   ],
   "author": "Eko Eryanto <ekoeryanto@gmail.com>",
   "license": "MIT",
